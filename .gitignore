@@ -8,3 +8,4 @@ hardware/PCB/esp32-ups-snmp/**/*backups/
 firmware/**/*include/Customization.hpp
 firmware/**/src/GitVersion.cpp
 *.ps1
+firmware/**/src/StaticWebContent.cpp
