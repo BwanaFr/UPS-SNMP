@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<style>
+.progress {margin: 15px auto;  max-width: 500px;height: 30px;}
+.progress .progress__bar {
+  height: 100%; width: 1%; border-radius: 15px;
+  background: repeating-linear-gradient(135deg,#336ffc,#036ffc 15px,#1163cf 15px,#1163cf 30px); }
+ .status {font-weight: bold; font-size: 30px;};
+</style>
+</head>
+<body>
+<center><h1 id="devName">ESP32 UPS</h1></center>
+<link rel="stylesheet" href="bootstrap.min.css">
+<div class="well" style="text-align: center;">
+  <div><button class="btn btn-primary" type="button" onclick="file_sel.click();" id="upBtn" disabled>Upload Firmware</button></div>
+  <div class="progress"><div class="progress__bar" id="progress"></div></div>
+  <div class="status" id="status_div"></div>
+</div>
+<input type="file" id="file_sel" onchange="upload_file()" style="display: none;" accept=".fw,.bin">
+<div class="container-fluid fixed-bottom text-center pb-1 bg-light">
+    <div class="row">
+      <div class="col"><a href="oid.html">SNMP OID documentation</a></div>
+      <div class="col"><a href="config.html">Device configuration</a></div>
+      <div class="col"><a href="index.html">Status page</a></div>
+    </div>
+</div>
+<script>
+var devName = "";
+function upload_file() {
+  document.getElementById("status_div").innerHTML = "Upload in progress";
+  let data = document.getElementById("file_sel").files[0];
+  xhr = new XMLHttpRequest();
+  xhr.open("POST", "/api/ota", true);
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  xhr.upload.addEventListener("progress", function (event) {
+     if (event.lengthComputable) {
+        let pc = Math.round((event.loaded / event.total) * 100);
+    	  document.getElementById("progress").style.width = pc + "%";
+        document.title = "[" + pc + "%" + "]" + devName + " FW update";
+     }
+  });
+  xhr.onreadystatechange = function () {
+    if(xhr.readyState === XMLHttpRequest.DONE) {
+      var status = xhr.status;
+      if (status >= 200 && status < 400)
+      {
+         document.title = "[Done!]" + devName + " FW update";
+        document.getElementById("status_div").innerHTML = "Upload accepted. Device will reboot.";
+        window.setTimeout( function(){
+                 window.location = "index.html";
+             }, 1000 );
+      } else {
+        document.getElementById("status_div").innerHTML = "Upload rejected!";
+        document.title = "[ERROR!]" + devName + " FW update";
+      }
+    }
+  };
+  xhr.send(data);
+  return false;
+}
+
+function fetchInfo(data, status, xhr){
+  const req = new XMLHttpRequest();
+    req.open("GET",'/api/config',true);
+    req.send();
+    req.onload = function(){
+      const json = JSON.parse(req.responseText);
+      devName = json.deviceName;
+      document.getElementById("devName").innerHTML = json.deviceName + " firmware update";
+      document.title = json.deviceName + " FW update";
+      document.getElementById("upBtn").disabled = false;
+    };
+}
+
+fetchInfo();
+
+</script>
+
+</body>
+</html>

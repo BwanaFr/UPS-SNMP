@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+<link rel="stylesheet" href="bootstrap.min.css">
+<div class="container">
+  <div class="row"><h1 class="text-center" id="devName">ESP32 UPS</h1></div>
+  <div class="row container-fluid">
+    <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">OID</th>
+        <th scope="col">Provider</th>
+        <th scope="col">Name</th>
+        <th scope="col">Last value</th>
+        <th scope="col">Active?</th>
+      </tr>
+    </thead>
+    <tbody id="tblBody">
+    </tbody>
+  </table>
+  </div>
+</div>
+<div class="container-fluid fixed-bottom text-center pb-1 bg-light">
+    <div class="row">
+        <div class="col"><a href="index.html">Status page</a></div>
+        <div class="col"><a href="config.html">Device configuration</a></div>
+        <div class="col"><a href="ota.html">Update firmware</a></div>
+    </div>
+</div>
+<script>
+
+function fetchInfo(data, status, xhr){
+  const req = new XMLHttpRequest();
+    req.open("GET",'/api/oid_info',true);
+    req.send();
+    req.onload = function(){
+      const json = JSON.parse(req.responseText);
+      document.getElementById("devName").innerHTML = json.deviceName + " available OID information";
+      document.title = json.deviceName + " OID info";
+      var tbodyOID = document.getElementById("tblBody");
+      json.data.forEach(element => {
+        var oidRow = tbodyOID.insertRow();
+        oidRow.insertCell().outerHTML = `<th>${element.OID}</th>`;
+        oidRow.insertCell().appendChild(document.createTextNode(element.provider));
+        oidRow.insertCell().appendChild(document.createTextNode(element.name));
+        oidRow.insertCell().appendChild(document.createTextNode(element.value));
+        if(element.active){
+          oidRow.insertCell().innerHTML = '<div class="badge text-bg-success">YES</span>';
+        }else{
+          oidRow.insertCell().innerHTML = '<span class="badge text-bg-secondary">NO</span>';
+        }
+      });
+    };
+}
+
+fetchInfo();
+
+</script>
+
+</body>
+</html>

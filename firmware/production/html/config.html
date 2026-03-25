@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style type="text/css">
+        .form-control::placeholder{opacity:0.4}
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid pb-5">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="cfgForm" class="needs-validation was-validated" novalidate>
+                    <fieldset>
+                        <legend class="mt-2">Network settings<a href="#" onclick="showInfos();" style="text-decoration: none;">&#9432;</a></legend>
+                        <div class="row mb-3 align-self-center">
+                            <label for="deviceName" class="col-sm-1 col-form-label">Device name</label>
+                            <div class="col-sm-3">
+                                <input id="deviceName"
+                                    name="deviceName" class="form-control" type="text"
+                                    placeholder="Name of the device" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid value.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-1 align-self-center">
+                            <div class="col-sm-2 offset-sm-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="useDHCP" onclick="toggleDHCP();" checked>
+                                    <label class="form-check-label" for="useDHCP">
+                                    Use DHCP?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-content-center">
+                            <label for="staticIP" class="col-sm-1 col-form-label">IP address</label>
+                            <div class="col-sm-auto align-content-center">
+                                <input id="staticIP"
+                                    name="staticIP" class="form-control" type="text" value=""
+                                    pattern="(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                                    placeholder="0.0.0.0" required disabled onkeyup="checkForm();"/>
+                                <div class="invalid-feedback">Please provide a valid IP address.</div>
+                            </div>
+                        </div>
+                        <div class="row align-content-center">
+                            <label for="staticMask" class="col-sm-1 col-form-label">Subnet mask</label>
+                            <div class="col-sm-auto align-content-center">
+                                <input id="staticMask"
+                                    name="staticMask" class="form-control" type="text" value=""
+                                    pattern="(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                                    placeholder="255.255.255.0" required disabled onkeyup="checkForm();"/>
+                                <div class="invalid-feedback">Please provide a valid subnet mask.</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 align-content-center">
+                            <label for="staticGateway" class="col-sm-1 col-form-label">Gateway</label>
+                            <div class="col-sm-auto align-content-center">
+                                <input id="staticGateway"
+                                    name="staticGateway" class="form-control" type="text" value=""
+                                    pattern="(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                                    placeholder="0.0.0.0" required disabled onkeyup="checkForm();"/>
+                                <div class="invalid-feedback">Please provide a valid gateway IP.</div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend class="mt-2">SNMP agent</legend>
+                        <div class="row align-content-center">
+                            <label for="snmpROCommunity" class="col-sm-1 col-form-label">Community string</label>
+                            <div class="col-sm-3 align-content-center">
+                                <input id="snmpROCommunity"
+                                    name="snmpROCommunity" class="form-control" type="text"
+                                    placeholder="public">
+                                <div class="invalid-feedback">
+                                    Please provide a valid value.
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend class="mt-2">Monitoring</legend>
+                        <div class="row align-content-center">
+                            <label for="pingTestIP" class="col-sm-1 col-form-label">Ping test IP</label>
+                            <div class="col-sm-auto align-content-center">
+                                <input id="pingTestIP"
+                                    name="pingTestIP" class="form-control" type="text" value=""
+                                    pattern="(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                                    placeholder="0.0.0.0"/>
+                                <div class="invalid-feedback">Please provide a valid IP.</div>
+                            </div>
+                            <div class="col-sm-3 form-check mt-2 mx-2 align-content-center">
+                                    <input class="form-check-input" type="checkbox" id="pingTestGateway" onchange="togglePingGW();">
+                                    <label class="form-check-label" for="pingTestGateway">
+                                    Use gateway?
+                                    </label>
+                            </div>
+                        </div>
+                        <div class="row  align-content-center">
+                            <label for="pingTestInterval" class="col-sm-1 col-form-label">Ping test interval [ms]</label>
+                            <div class="col-sm-auto align-content-center">
+                                <input id="pingTestInterval"
+                                    name="pingTestInterval" class="form-control" type="text" value=""
+                                    inputmode="numeric"
+                                    pattern="[1-9][0-9][0-9]+"
+                                    placeholder="1000"/>
+                                <div class="invalid-feedback">Please provide a valid interval (minimum 100ms).</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3 align-content-center">
+                            <label for="pingTestTimeout" class="col-sm-1 col-form-label">Ping test timeout [ms]</label>
+                            <div class="col-sm-auto align-content-center">
+                                <input id="pingTestTimeout"
+                                    name="pingTestTimeout" class="form-control" type="text" value=""
+                                    inputmode="numeric"
+                                    pattern="[1-9][0-9]+"
+                                    placeholder="100"/>
+                                <div class="invalid-feedback">Please provide a valid timeout (minimum 10ms).</div>
+                            </div>
+                        </div>
+                        <div class="row mb-1 align-content-center">
+                            <label for="switchIP" class="col-sm-1 col-form-label">Switch IP</label>
+                            <div class="col-sm-auto align-content-center">
+                                <input id="switchIP"
+                                    name="switchIP" class="form-control" type="text" value=""
+                                    pattern="(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                                    placeholder="0.0.0.0"/>
+                                <div class="invalid-feedback">Please provide a valid IP (or empty).</div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <button class="btn btn-primary mt-1 ms-1" type="submit" id="subBtn" disabled>Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid fixed-bottom text-center pb-1 bg-light">
+        <div class="row">
+        <div class="col"><a href="oid.html">SNMP OID documentation</a></div>
+        <div class="col"><a href="index.html">Status page</a></div>
+        <div class="col"><a href="ota.html">Update firmware</a></div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalDialog" tabindex="-1" aria-labelledby="modalLabel" aria-modal="true"
+    role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Configuration</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
+</body>
+<script>
+    var ipChanged = false;
+
+    function loadConfiguration(){
+        fetch('/api/config')
+            .then((response) => {
+                if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                document.title = data.deviceName + " configuration";
+                var inputs = document.forms["cfgForm"].getElementsByTagName("input");
+                Array.prototype.slice.call(inputs)
+                    .forEach(function (input) {
+                        let cfgValue = data[input.id] ?? null;
+                        if(cfgValue !== null) {
+                            if(input.type == "checkbox"){
+                                input.checked = cfgValue;
+                            }else if(input.type == "text"){
+                                if(input.inputMode == "numeric"){
+                                    input.value = parseInt(cfgValue);
+                                }else{
+                                    input.value = cfgValue;
+                                }
+                            }
+                        }
+                    });
+                document.getElementById("subBtn").disabled = false;
+                toggleDHCP();
+                togglePingGW();
+            })
+            .catch((error) => {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    function getNetwork(ip, mask){
+        const re = /([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/i;
+        let ipGroups = re.exec(ip);
+        let maskGroup = re.exec(mask);
+        if(ipGroups && maskGroup){
+            let ipBin = ((parseInt(ipGroups[1]) & 0xFF) << 24) | ((parseInt(ipGroups[2]) & 0xFF) << 16) | ((parseInt(ipGroups[3]) & 0xFF) << 8) | (parseInt(ipGroups[4]) & 0xFF);
+            let maskBin = ((parseInt(maskGroup[1]) & 0xFF) << 24) | ((parseInt(maskGroup[2]) & 0xFF) << 16) | ((parseInt(maskGroup[3]) & 0xFF) << 8) | (parseInt(maskGroup[4]) & 0xFF);
+            let network = ipBin & maskBin;
+            //let networkStr = `${(network >> 24) & 0xFF}.${(network >> 16) & 0xFF}.${(network >> 8) & 0xFF}.${network & 0xFF}`;
+            return network;
+        }
+        return null;
+    }
+
+    function checkForm(){
+        if(!document.getElementById("useDHCP").checked){
+            document.getElementById("staticGateway").setCustomValidity("");
+            let ipNet = getNetwork(document.getElementById("staticIP").value, document.getElementById("staticMask").value);
+            let gwNet = getNetwork(document.getElementById("staticGateway").value, document.getElementById("staticMask").value);
+            if((ipNet != null) && (ipNet != gwNet)){
+                document.getElementById("staticGateway").setCustomValidity("Not in same network!");
+            }
+        }
+        return document.getElementById("cfgForm").checkValidity();
+    }
+
+    function openModal() {
+        document.getElementById("backdrop").style.display = "block"
+        document.getElementById("modalDialog").style.display = "block"
+        document.getElementById("modalDialog").classList.add("show")
+    }
+    function closeModal() {
+        document.getElementById("backdrop").style.display = "none"
+        document.getElementById("modalDialog").style.display = "none"
+        document.getElementById("modalDialog").classList.remove("show")
+        if(!ipChanged){
+            window.setTimeout( function(){
+                 window.location = "index.html";
+             }, 1000 );
+        }
+    }
+    // Get the modal
+    var modal = document.getElementById('exampleModal');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal()
+        }
+    }
+
+
+    function sendForm(){
+        var inputs = document.forms["cfgForm"].getElementsByTagName("input");
+        var postData = {};
+        Array.prototype.slice.call(inputs)
+            .forEach(function (input) {
+                if(input.type == "checkbox"){
+                    postData[input.id] = input.checked ? true : false;
+                }else if((input.type == "text") /*&& input.value*/){
+                    if(input.inputMode == "numeric"){
+                        postData[input.id] = parseInt(input.value);
+                    }else{
+                        postData[input.id] = input.value;
+                    }
+                }
+            });
+        // console.log(postData);
+        fetch("/api/config", {
+            method: "POST",
+            body: JSON.stringify(postData),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if(!data["IPChanged"]){
+                ipChanged = false;
+                document.getElementById("modalBody").innerHTML = data["message"];
+            }else{
+                ipChanged = true;
+                document.getElementById("modalBody").innerHTML = data["message"] + "<br/>IP changed, please go to new URL!";
+                document.getElementById("subBtn").disabled = true;
+                document.getElementById("subBtn").innerHTML = "IP changed";
+            }
+            openModal();
+        })
+        .catch((error) => {
+            console.error('Fetch error:', error);
+        });
+    }
+
+    function toggleDHCP(){
+        let en = document.getElementById("useDHCP").checked;
+        document.getElementById("staticIP").disabled = en;
+        document.getElementById("staticMask").disabled = en;
+        document.getElementById("staticGateway").disabled = en;
+    }
+
+    function togglePingGW(){
+        let en = document.getElementById("pingTestGateway").checked;
+        document.getElementById('pingTestIP').disabled = en;
+    }
+
+    loadConfiguration();
+    (() => {
+        'use strict'
+        document.getElementById("cfgForm").addEventListener('submit', event => {
+            if (checkForm()) {
+                sendForm();
+            }
+            event.preventDefault()
+            event.stopPropagation()
+            }, false);
+        })()
+</script>
+</html>

@@ -1,0 +1,1083 @@
+
+Bus 002 Device 006: ID 051d:0002 American Power Conversion Uninterruptible Power Supply
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               1.10
+  bDeviceClass            0 [unknown]
+  bDeviceSubClass         0 [unknown]
+  bDeviceProtocol         0 
+  bMaxPacketSize0         8
+  idVendor           0x051d American Power Conversion
+  idProduct          0x0002 Uninterruptible Power Supply
+  bcdDevice            0.06
+  iManufacturer           3 American Power Conversion
+  iProduct                1 Back-UPS CS 650 FW:817.v7 .I USB FW:v7 
+  iSerial                 2 4B1043P24958  
+  bNumConfigurations      1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0022
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0 
+    bmAttributes         0xc0
+      Self Powered
+    MaxPower                2mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           1
+      bInterfaceClass         3 Human Interface Device
+      bInterfaceSubClass      0 [unknown]
+      bInterfaceProtocol      0 
+      iInterface              0 
+        HID Device Descriptor:
+          bLength                 9
+          bDescriptorType        33
+          bcdHID               1.10
+          bCountryCode           33 US
+          bNumDescriptors         1
+          bDescriptorType        34 Report
+          wDescriptorLength    1217
+          Report Descriptor: (length is 1217)
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Local ): Usage, data= [ 0x04 ] 4
+                            UPS
+            Item(Main  ): Collection, data= [ 0x01 ] 1
+                            Application
+            Item(Local ): Usage, data= [ 0x24 ] 36
+                            Power Summary
+            Item(Main  ): Collection, data= [ 0x02 ] 2
+                            Logical
+            Item(Global): Report ID, data= [ 0x01 ] 1
+            Item(Local ): Usage, data= [ 0xfe ] 254
+                            iProduct
+            Item(Local ): String Index, data= [ 0x01 ] 1
+            Item(Global): Report Size, data= [ 0x08 ] 8
+            Item(Global): Report Count, data= [ 0x01 ] 1
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Global): Logical Maximum, data= [ 0xff 0x00 ] 255
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x02 ] 2
+            Item(Local ): Usage, data= [ 0xff ] 255
+                            iSerialNumber
+            Item(Local ): String Index, data= [ 0x02 ] 2
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x03 ] 3
+            Item(Local ): Usage, data= [ 0xfd ] 253
+                            iManufacturer
+            Item(Local ): String Index, data= [ 0x03 ] 3
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Global): Report ID, data= [ 0x04 ] 4
+            Item(Local ): Usage, data= [ 0x8f ] 143
+                            iOEMInformation
+            Item(Local ): String Index, data= [ 0x03 ] 3
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x05 ] 5
+            Item(Local ): Usage, data= [ 0x89 ] 137
+                            iDeviceChemistry
+            Item(Local ): String Index, data= [ 0x04 ] 4
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x06 ] 6
+            Item(Local ): Usage, data= [ 0x8b ] 139
+                            Rechargeable
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x2c ] 44
+                            Capacity Mode
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x0e ] 14
+            Item(Local ): Usage, data= [ 0x83 ] 131
+                            Design Capacity
+            Item(Global): Logical Maximum, data= [ 0x64 ] 100
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x67 ] 103
+                            Full Charge Capacity
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x0c ] 12
+            Item(Local ): Usage, data= [ 0x66 ] 102
+                            Remaining Capacity
+            Item(Main  ): Input, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x66 ] 102
+                            Remaining Capacity
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x10 ] 16
+            Item(Local ): Usage, data= [ 0x8d ] 141
+                            Capacity Granularity 1
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x8e ] 142
+                            Capacity Granularity 2
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x0f ] 15
+            Item(Local ): Usage, data= [ 0x8c ] 140
+                            Warning Capacity Limit
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x11 ] 17
+            Item(Local ): Usage, data= [ 0x29 ] 41
+                            Remaining Capacity Limit
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x09 ] 9
+            Item(Local ): Usage, data= [ 0x85 ] 133
+                            Manufacturer Date
+            Item(Global): Report Size, data= [ 0x10 ] 16
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0x00 0x00 ] 65535
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x0d ] 13
+            Item(Local ): Usage, data= [ 0x68 ] 104
+                            Run Time To Empty
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0x00 0x00 ] 65535
+            Item(Global): Unit, data= [ 0x01 0x10 ] 4097
+                            System: SI Linear, Unit: Seconds
+            Item(Global): Unit Exponent, data= [ 0x00 ] 0
+                            Unit Exponent: 0
+            Item(Main  ): Input, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x68 ] 104
+                            Run Time To Empty
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Global): Report ID, data= [ 0x12 ] 18
+            Item(Local ): Usage, data= [ 0x57 ] 87
+                            Delay Before Shutdown
+            Item(Global): Logical Minimum, data= [ 0xff 0xff ] 65535
+            Item(Global): Logical Maximum, data= [ 0xff 0x7f ] 32767
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x13 ] 19
+            Item(Local ): Usage, data= [ 0x55 ] 85
+                            Delay Before Reboot
+            Item(Global): Report Size, data= [ 0x18 ] 24
+            Item(Global): Logical Minimum, data= [ 0xff 0xff 0xff 0xff ] -1
+            Item(Global): Logical Maximum, data= [ 0x18 0xc5 0x13 0x00 ] 1295640
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Global): Report ID, data= [ 0x08 ] 8
+            Item(Local ): Usage, data= [ 0x2a ] 42
+                            Remaining Time Limit
+            Item(Global): Report Size, data= [ 0x10 ] 16
+            Item(Global): Logical Maximum, data= [ 0x64 0x05 0x00 0x00 ] 1380
+            Item(Global): Logical Minimum, data= [ 0x78 0x00 ] 120
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Global): Report ID, data= [ 0x0a ] 10
+            Item(Local ): Usage, data= [ 0x40 ] 64
+                            Config Voltage
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0x00 0x00 ] 65535
+            Item(Global): Unit, data= [ 0x21 0xd1 0xf0 0x00 ] 15782177
+                            System: SI Linear, Unit: Centimeter^2*Gram*Seconds^-3*Ampere^-1
+            Item(Global): Unit Exponent, data= [ 0x05 ] 5
+                            Unit Exponent: 5
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x0b ] 11
+            Item(Local ): Usage, data= [ 0x30 ] 48
+                            Voltage
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x14 ] 20
+            Item(Local ): Usage, data= [ 0x5a ] 90
+                            Audible Alarm Control
+            Item(Global): Report Size, data= [ 0x08 ] 8
+            Item(Global): Logical Minimum, data= [ 0x01 ] 1
+            Item(Global): Logical Maximum, data= [ 0x03 ] 3
+            Item(Global): Unit, data= [ 0x00 ] 0
+                            System: None, Unit: (None)
+            Item(Global): Unit Exponent, data= [ 0x00 ] 0
+                            Unit Exponent: 0
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x02 ] 2
+                            Present Status
+            Item(Main  ): Collection, data= [ 0x02 ] 2
+                            Logical
+            Item(Global): Report ID, data= [ 0x07 ] 7
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Local ): Usage, data= [ 0x44 ] 68
+                            Charging
+            Item(Global): Report Size, data= [ 0x01 ] 1
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Global): Logical Maximum, data= [ 0x01 ] 1
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x44 ] 68
+                            Charging
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x45 ] 69
+                            Discharging
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x45 ] 69
+                            Discharging
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0xd0 ] 208
+                            AC Present
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0xd0 ] 208
+                            AC Present
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0xd1 ] 209
+                            Battery Present
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0xd1 ] 209
+                            Battery Present
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x42 ] 66
+                            Below Remaining Capacity Limit
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x42 ] 66
+                            Below Remaining Capacity Limit
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Local ): Usage, data= [ 0x68 ] 104
+                            Shutdown Requested
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x68 ] 104
+                            Shutdown Requested
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x69 ] 105
+                            Shutdown  Imminent
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x69 ] 105
+                            Shutdown  Imminent
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Local ): Usage, data= [ 0x43 ] 67
+                            Remaining Time Limit Expired
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x43 ] 67
+                            Remaining Time Limit Expired
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Local ): Usage, data= [ 0x73 ] 115
+                            Communication Lost
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x73 ] 115
+                            Communication Lost
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Local ): Usage, data= [ 0x4b ] 75
+                            Need Replacement
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x4b ] 75
+                            Need Replacement
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Local ): Usage, data= [ 0x65 ] 101
+                            Overload
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x65 ] 101
+                            Overload
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Local ): Usage, data= [ 0xdb ] 219
+                            Voltage Not Regulated
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0xdb ] 219
+                            Voltage Not Regulated
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Local ): Usage, data= [ 0x80 ] 128
+                            (null)
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x80 ] 128
+                            (null)
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report Count, data= [ 0x03 ] 3
+            Item(Main  ): Input, data= [ 0x01 ] 1
+                            Constant Array Absolute No_Wrap Linear
+                            Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Main  ): Feature, data= [ 0x01 ] 1
+                            Constant Array Absolute No_Wrap Linear
+                            Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Main  ): End Collection, data=none
+            Item(Main  ): End Collection, data=none
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Local ): Usage, data= [ 0x12 ] 18
+                            Battery
+            Item(Main  ): Collection, data= [ 0x00 ] 0
+                            Physical
+            Item(Global): Report ID, data= [ 0x16 ] 22
+            Item(Local ): Usage, data= [ 0x58 ] 88
+                            Test
+            Item(Global): Report Size, data= [ 0x08 ] 8
+            Item(Global): Report Count, data= [ 0x01 ] 1
+            Item(Global): Logical Maximum, data= [ 0x06 ] 6
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x58 ] 88
+                            Test
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Global): Report ID, data= [ 0x17 ] 23
+            Item(Local ): Usage, data= [ 0x19 ] 25
+                            (null)
+            Item(Global): Logical Maximum, data= [ 0x5a ] 90
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x1b ] 27
+            Item(Local ): Usage, data= [ 0x1a ] 26
+                            (null)
+            Item(Global): Logical Maximum, data= [ 0x03 ] 3
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x1c ] 28
+            Item(Local ): Usage, data= [ 0x1b ] 27
+                            (null)
+            Item(Global): Logical Maximum, data= [ 0xff 0x00 ] 255
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x45 ] 69
+            Item(Local ): Usage, data= [ 0x16 ] 22
+                            (null)
+            Item(Global): Report Size, data= [ 0x18 ] 24
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0xff 0x00 ] 16777215
+            Item(Main  ): Feature, data= [ 0xa2 0x01 ] 418
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Buffered Bytes
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Global): Report ID, data= [ 0x15 ] 21
+            Item(Local ): Usage, data= [ 0x85 ] 133
+                            Manufacturer Date
+            Item(Global): Report Size, data= [ 0x10 ] 16
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0x00 0x00 ] 65535
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x18 ] 24
+            Item(Local ): Usage, data= [ 0x66 ] 102
+                            Remaining Capacity
+            Item(Global): Unit Exponent, data= [ 0x0f ] 15
+                            Unit Exponent: 15
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x1a ] 26
+            Item(Local ): Usage, data= [ 0x2a ] 42
+                            Remaining Time Limit
+            Item(Global): Logical Maximum, data= [ 0x64 0x05 0x00 0x00 ] 1380
+            Item(Global): Logical Minimum, data= [ 0x78 0x00 ] 120
+            Item(Global): Unit, data= [ 0x01 0x10 ] 4097
+                            System: SI Linear, Unit: Seconds
+            Item(Global): Unit Exponent, data= [ 0x00 ] 0
+                            Unit Exponent: 0
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x19 ] 25
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0x00 0x00 ] 65535
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Local ): Usage, data= [ 0x68 ] 104
+                            Run Time To Empty
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Global): Report ID, data= [ 0x1e ] 30
+            Item(Local ): Usage, data= [ 0x36 ] 54
+                            Temperature
+            Item(Global): Unit, data= [ 0x01 0x00 0x01 0x00 ] 65537
+                            System: SI Linear, Unit: Kelvin
+            Item(Global): Unit Exponent, data= [ 0x0f ] 15
+                            Unit Exponent: 15
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x1f ] 31
+            Item(Local ): Usage, data= [ 0x40 ] 64
+                            Config Voltage
+            Item(Global): Unit, data= [ 0x21 0xd1 0xf0 0x00 ] 15782177
+                            System: SI Linear, Unit: Centimeter^2*Gram*Seconds^-3*Ampere^-1
+            Item(Global): Unit Exponent, data= [ 0x05 ] 5
+                            Unit Exponent: 5
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x1d ] 29
+            Item(Local ): Usage, data= [ 0x30 ] 48
+                            Voltage
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x47 ] 71
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Local ): Usage, data= [ 0x24 ] 36
+                            (null)
+            Item(Global): Report Size, data= [ 0x08 ] 8
+            Item(Global): Logical Minimum, data= [ 0xe9 0x00 ] 233
+            Item(Global): Logical Maximum, data= [ 0xfe 0x00 ] 254
+            Item(Global): Unit, data= [ 0x00 ] 0
+                            System: None, Unit: (None)
+            Item(Global): Unit Exponent, data= [ 0x00 ] 0
+                            Unit Exponent: 0
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x48 ] 72
+            Item(Local ): Usage, data= [ 0x18 ] 24
+                            (null)
+            Item(Global): Report Size, data= [ 0x20 ] 32
+            Item(Global): Logical Minimum, data= [ 0x01 0x00 0x00 0x80 ] -2147483647
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0xff 0x7f ] 2147483647
+            Item(Main  ): Feature, data= [ 0xa2 0x01 ] 418
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Buffered Bytes
+            Item(Main  ): End Collection, data=none
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Local ): Usage, data= [ 0x1a ] 26
+                            Input
+            Item(Main  ): Collection, data= [ 0x00 ] 0
+                            Physical
+            Item(Global): Report ID, data= [ 0x20 ] 32
+            Item(Local ): Usage, data= [ 0x30 ] 48
+                            Voltage
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0x00 0x00 ] 65535
+            Item(Global): Unit, data= [ 0x21 0xd1 0xf0 0x00 ] 15782177
+                            System: SI Linear, Unit: Centimeter^2*Gram*Seconds^-3*Ampere^-1
+            Item(Global): Unit Exponent, data= [ 0x06 ] 6
+                            Unit Exponent: 6
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x46 ] 70
+            Item(Local ): Usage, data= [ 0x40 ] 64
+                            Config Voltage
+            Item(Global): Report Size, data= [ 0x08 ] 8
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Global): Logical Maximum, data= [ 0xff 0x00 ] 255
+            Item(Global): Unit, data= [ 0x21 0xd1 0xf0 0x00 ] 15782177
+                            System: SI Linear, Unit: Centimeter^2*Gram*Seconds^-3*Ampere^-1
+            Item(Global): Unit Exponent, data= [ 0x07 ] 7
+                            Unit Exponent: 7
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Global): Report ID, data= [ 0x21 ] 33
+            Item(Local ): Usage, data= [ 0x52 ] 82
+                            (null)
+            Item(Global): Report Size, data= [ 0x08 ] 8
+            Item(Global): Logical Maximum, data= [ 0x0a ] 10
+            Item(Global): Unit, data= [ 0x00 ] 0
+                            System: None, Unit: (None)
+            Item(Global): Unit Exponent, data= [ 0x00 ] 0
+                            Unit Exponent: 0
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x22 ] 34
+            Item(Local ): Usage, data= [ 0x61 ] 97
+                            (null)
+            Item(Global): Logical Maximum, data= [ 0x02 ] 2
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x42 ] 66
+            Item(Local ): Usage, data= [ 0x24 ] 36
+                            (null)
+            Item(Global): Logical Minimum, data= [ 0x6c 0x00 ] 108
+            Item(Global): Logical Maximum, data= [ 0x90 0x00 ] 144
+            Item(Global): Unit, data= [ 0x00 ] 0
+                            System: None, Unit: (None)
+            Item(Global): Unit Exponent, data= [ 0x00 ] 0
+                            Unit Exponent: 0
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Main  ): End Collection, data=none
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Local ): Usage, data= [ 0x1c ] 28
+                            Output
+            Item(Main  ): Collection, data= [ 0x00 ] 0
+                            Physical
+            Item(Global): Report ID, data= [ 0x2c ] 44
+            Item(Local ): Usage, data= [ 0x35 ] 53
+                            Percent Load
+            Item(Global): Report Size, data= [ 0x10 ] 16
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0x00 0x00 ] 65535
+            Item(Global): Unit Exponent, data= [ 0x0f ] 15
+                            Unit Exponent: 15
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x52 ] 82
+            Item(Local ): Usage, data= [ 0x44 ] 68
+                            Config Active Power
+            Item(Global): Unit, data= [ 0x21 0xd1 ] 53537
+                            System: SI Linear, Unit: Centimeter^2*Gram*Seconds^-3
+            Item(Global): Unit Exponent, data= [ 0x07 ] 7
+                            Unit Exponent: 7
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x2a ] 42
+            Item(Local ): Usage, data= [ 0x32 ] 50
+                            Frequency
+            Item(Global): Unit, data= [ 0x01 0xf0 ] 61441
+                            System: SI Linear, Unit: Seconds^-1
+            Item(Global): Unit Exponent, data= [ 0x0e ] 14
+                            Unit Exponent: 14
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x2b ] 43
+            Item(Local ): Usage, data= [ 0x30 ] 48
+                            Voltage
+            Item(Global): Unit, data= [ 0x21 0xd1 0xf0 0x00 ] 15782177
+                            System: SI Linear, Unit: Centimeter^2*Gram*Seconds^-3*Ampere^-1
+            Item(Global): Unit Exponent, data= [ 0x06 ] 6
+                            Unit Exponent: 6
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x2d ] 45
+            Item(Local ): Usage, data= [ 0x40 ] 64
+                            Config Voltage
+            Item(Global): Logical Minimum, data= [ 0xdc 0x00 ] 220
+            Item(Global): Logical Maximum, data= [ 0xf0 0x00 ] 240
+            Item(Global): Unit Exponent, data= [ 0x07 ] 7
+                            Unit Exponent: 7
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x23 ] 35
+            Item(Local ): Usage, data= [ 0x54 ] 84
+                            High Voltage Transfer
+            Item(Global): Logical Minimum, data= [ 0x00 0x01 ] 256
+            Item(Global): Logical Maximum, data= [ 0x16 0x01 ] 278
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x24 ] 36
+            Item(Local ): Usage, data= [ 0x53 ] 83
+                            Low Voltage Transfer
+            Item(Global): Logical Minimum, data= [ 0xa0 0x00 ] 160
+            Item(Global): Logical Maximum, data= [ 0xc4 0x00 ] 196
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Global): Report ID, data= [ 0x25 ] 37
+            Item(Local ): Usage, data= [ 0x7e ] 126
+                            (null)
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Global): Logical Maximum, data= [ 0xa4 0x01 0x00 0x00 ] 420
+            Item(Global): Unit, data= [ 0x01 0x10 ] 4097
+                            System: SI Linear, Unit: Seconds
+            Item(Global): Unit Exponent, data= [ 0x00 ] 0
+                            Unit Exponent: 0
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x26 ] 38
+            Item(Local ): Usage, data= [ 0x76 ] 118
+                            (null)
+            Item(Global): Logical Maximum, data= [ 0x76 0x02 0x00 0x00 ] 630
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Global): Report ID, data= [ 0x27 ] 39
+            Item(Local ): Usage, data= [ 0x57 ] 87
+                            Delay Before Shutdown
+            Item(Global): Logical Minimum, data= [ 0xff 0xff ] 65535
+            Item(Global): Logical Maximum, data= [ 0xff 0x7f ] 32767
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x28 ] 40
+            Item(Local ): Usage, data= [ 0x56 ] 86
+                            Delay Before Startup
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x29 ] 41
+            Item(Local ): Usage, data= [ 0x55 ] 85
+                            Delay Before Reboot
+            Item(Global): Report Size, data= [ 0x18 ] 24
+            Item(Global): Logical Minimum, data= [ 0xff 0xff 0xff 0xff ] -1
+            Item(Global): Logical Maximum, data= [ 0x18 0xc5 0x13 0x00 ] 1295640
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Global): Report ID, data= [ 0x40 ] 64
+            Item(Local ): Usage, data= [ 0x7c ] 124
+                            (null)
+            Item(Global): Report Size, data= [ 0x08 ] 8
+            Item(Global): Logical Maximum, data= [ 0x01 ] 1
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x41 ] 65
+            Item(Local ): Usage, data= [ 0x7d ] 125
+                            (null)
+            Item(Global): Report Size, data= [ 0x10 ] 16
+            Item(Global): Logical Minimum, data= [ 0xff 0xff ] 65535
+            Item(Global): Logical Maximum, data= [ 0xff 0x7f ] 32767
+            Item(Global): Unit, data= [ 0x01 0x10 ] 4097
+                            System: SI Linear, Unit: Seconds
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Main  ): End Collection, data=none
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Global): Report ID, data= [ 0x2e ] 46
+            Item(Local ): Usage, data= [ 0xfe ] 254
+                            iProduct
+            Item(Local ): String Index, data= [ 0x05 ] 5
+            Item(Global): Report Size, data= [ 0x08 ] 8
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Global): Logical Maximum, data= [ 0xff 0x00 ] 255
+            Item(Global): Unit, data= [ 0x00 ] 0
+                            System: None, Unit: (None)
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x2f ] 47
+            Item(Local ): Usage, data= [ 0xff ] 255
+                            iSerialNumber
+            Item(Local ): String Index, data= [ 0x02 ] 2
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x30 ] 48
+            Item(Local ): Usage, data= [ 0xfd ] 253
+                            iManufacturer
+            Item(Local ): String Index, data= [ 0x03 ] 3
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x31 ] 49
+            Item(Local ): Usage, data= [ 0x01 ] 1
+                            iName
+            Item(Local ): String Index, data= [ 0x06 ] 6
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Global): Report ID, data= [ 0x34 ] 52
+            Item(Local ): Usage, data= [ 0x42 ] 66
+                            (null)
+            Item(Local ): String Index, data= [ 0x07 ] 7
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Global): Report ID, data= [ 0x37 ] 55
+            Item(Local ): Usage, data= [ 0x79 ] 121
+                            (null)
+            Item(Local ): String Index, data= [ 0x08 ] 8
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x32 ] 50
+            Item(Local ): Usage, data= [ 0x72 ] 114
+                            (null)
+            Item(Global): Logical Maximum, data= [ 0x01 ] 1
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Global): Report ID, data= [ 0x35 ] 53
+            Item(Local ): Usage, data= [ 0x85 ] 133
+                            Manufacturer Date
+            Item(Global): Report Size, data= [ 0x10 ] 16
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0x00 0x00 ] 65535
+            Item(Main  ): Feature, data= [ 0x22 ] 34
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Global): Report ID, data= [ 0x3e ] 62
+            Item(Local ): Usage, data= [ 0x27 ] 39
+                            (null)
+            Item(Global): Report Size, data= [ 0x20 ] 32
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0xff 0x7f ] 2147483647
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x3f ] 63
+            Item(Local ): Usage, data= [ 0x28 ] 40
+                            (null)
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Global): Report ID, data= [ 0x36 ] 54
+            Item(Local ): Usage, data= [ 0x5a ] 90
+                            Audible Alarm Control
+            Item(Global): Report Size, data= [ 0x08 ] 8
+            Item(Global): Logical Minimum, data= [ 0x01 ] 1
+            Item(Global): Logical Maximum, data= [ 0x03 ] 3
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x02 ] 2
+                            Present Status
+            Item(Main  ): Collection, data= [ 0x02 ] 2
+                            Logical
+            Item(Global): Report ID, data= [ 0x33 ] 51
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Local ): Usage, data= [ 0x44 ] 68
+                            Charging
+            Item(Global): Report Size, data= [ 0x01 ] 1
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Global): Logical Maximum, data= [ 0x01 ] 1
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x44 ] 68
+                            Charging
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x45 ] 69
+                            Discharging
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x45 ] 69
+                            Discharging
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0xd0 ] 208
+                            AC Present
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0xd0 ] 208
+                            AC Present
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0xd1 ] 209
+                            Battery Present
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0xd1 ] 209
+                            Battery Present
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x42 ] 66
+                            Below Remaining Capacity Limit
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x42 ] 66
+                            Below Remaining Capacity Limit
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Local ): Usage, data= [ 0x68 ] 104
+                            Shutdown Requested
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x68 ] 104
+                            Shutdown Requested
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x69 ] 105
+                            Shutdown  Imminent
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x69 ] 105
+                            Shutdown  Imminent
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Local ): Usage, data= [ 0x43 ] 67
+                            Remaining Time Limit Expired
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x43 ] 67
+                            Remaining Time Limit Expired
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Local ): Usage, data= [ 0x73 ] 115
+                            Communication Lost
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x73 ] 115
+                            Communication Lost
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Local ): Usage, data= [ 0x4b ] 75
+                            Need Replacement
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x4b ] 75
+                            Need Replacement
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Local ): Usage, data= [ 0x65 ] 101
+                            Overload
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x65 ] 101
+                            Overload
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x85 ] 133
+                            Battery System Page
+            Item(Local ): Usage, data= [ 0xdb ] 219
+                            Voltage Not Regulated
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0xdb ] 219
+                            Voltage Not Regulated
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Local ): Usage, data= [ 0x80 ] 128
+                            (null)
+            Item(Main  ): Input, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Local ): Usage, data= [ 0x80 ] 128
+                            (null)
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report Count, data= [ 0x03 ] 3
+            Item(Main  ): Input, data= [ 0x01 ] 1
+                            Constant Array Absolute No_Wrap Linear
+                            Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Main  ): Feature, data= [ 0x01 ] 1
+                            Constant Array Absolute No_Wrap Linear
+                            Preferred_State No_Null_Position Non_Volatile Bitfield
+            Item(Main  ): End Collection, data=none
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Local ): Usage, data= [ 0x01 ] 1
+                            (null)
+            Item(Main  ): Collection, data= [ 0x00 ] 0
+                            Physical
+            Item(Global): Report ID, data= [ 0x60 ] 96
+            Item(Local ): Usage, data= [ 0x23 ] 35
+                            (null)
+            Item(Global): Report Size, data= [ 0x10 ] 16
+            Item(Global): Report Count, data= [ 0x01 ] 1
+            Item(Global): Logical Minimum, data= [ 0x00 ] 0
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0x00 0x00 ] 65535
+            Item(Global): Unit, data= [ 0x00 ] 0
+                            System: None, Unit: (None)
+            Item(Global): Unit Exponent, data= [ 0x00 ] 0
+                            Unit Exponent: 0
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x61 ] 97
+            Item(Local ): Usage, data= [ 0x26 ] 38
+                            (null)
+            Item(Global): Report Size, data= [ 0x08 ] 8
+            Item(Global): Logical Minimum, data= [ 0x04 0x00 ] 4
+            Item(Global): Logical Maximum, data= [ 0x0e 0x00 ] 14
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Global): Report ID, data= [ 0x62 ] 98
+            Item(Local ): Usage, data= [ 0x25 ] 37
+                            (null)
+            Item(Global): Report Size, data= [ 0x20 ] 32
+            Item(Global): Logical Minimum, data= [ 0x01 0x00 0x00 0x80 ] -2147483647
+            Item(Global): Logical Maximum, data= [ 0xff 0xff 0xff 0x7f ] 2147483647
+            Item(Main  ): Feature, data= [ 0xa2 0x01 ] 418
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Buffered Bytes
+            Item(Main  ): End Collection, data=none
+            Item(Global): Usage Page, data= [ 0x84 ] 132
+                            Power Device Page
+            Item(Local ): Usage, data= [ 0x16 ] 22
+                            Power Converter
+            Item(Main  ): Collection, data= [ 0x00 ] 0
+                            Physical
+            Item(Global): Report ID, data= [ 0x51 ] 81
+            Item(Global): Usage Page, data= [ 0x86 0xff ] 65414
+                            (null)
+            Item(Local ): Usage, data= [ 0x24 ] 36
+                            (null)
+            Item(Global): Logical Minimum, data= [ 0x80 0x00 ] 128
+            Item(Global): Logical Maximum, data= [ 0xe0 0x00 ] 224
+            Item(Global): Report Count, data= [ 0x01 ] 1
+            Item(Global): Report Size, data= [ 0x08 ] 8
+            Item(Main  ): Feature, data= [ 0xa2 ] 162
+                            Data Variable Absolute No_Wrap Linear
+                            No_Preferred_State No_Null_Position Volatile Bitfield
+            Item(Main  ): End Collection, data=none
+            Item(Main  ): End Collection, data=none
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x81  EP 1 IN
+        bmAttributes            3
+          Transfer Type            Interrupt
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0006  1x 6 bytes
+        bInterval             100
+Device Status:     0x0000
+  (Bus Powered)

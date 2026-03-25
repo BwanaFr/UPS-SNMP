@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+<link rel="stylesheet" href="bootstrap.min.css">
+<div class="container">
+  <div class="row p-3"><h1 class="text-center" id="devName">ESP32 UPS</h1></div>
+  <div class="row align-items-center">
+    <div class="col"><div class="text-end fs-5">Global status</div></div>
+    <div class="col"><div class="badge text-start text-bg-danger" id="globalStatus">--</div></div>
+  </div>
+  <div class="row align-items-center visually-hidden" id="ipAddressRow">
+    <div class="col"><div class="text-end fs-5">IP address</div></div>
+    <div class="col"><div class="badge text-start text-bg-light" id="ipAddress">--</div></div>
+  </div>
+  <div class="row align-items-center visually-hidden" id="macAddressRow">
+    <div class="col"><div class="text-end fs-5">MAC address</div></div>
+    <div class="col"><div class="badge text-start text-bg-light" id="macAddress">--</div></div>
+  </div>
+  <div class="row pt-5 visually-hidden" id="upsStatusRow">
+    <div class="container">
+        <div class="row text-center fs-3">
+            <div class="col"><p>UPS status</p></div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col"><div class="text-end fs-5">Status</div></div>
+            <div class="col"><div class="badge text-start text-bg-light" id="upsStatus">--</div></div>
+        </div>
+        <div class="row align-items-center visually-hidden">
+            <div class="col"><div class="text-end fs-5">AC present?</div></div>
+            <div class="col"><div class="badge text-start text-bg-light" id="upsACPresent">--</div></div>
+        </div>
+        <div class="row align-items-center visually-hidden">
+            <div class="col"><div class="text-end fs-5">Battery remaining time</div></div>
+            <div class="col"><div class="badge text-start text-bg-light" id="upsRemainingTime">--</div></div>
+        </div>
+        <div class="row align-items-center visually-hidden">
+            <div class="col"><div class="text-end fs-5">Capacity</div></div>
+            <div class="col"><div class="badge text-start text-bg-light" id="upsCapacity">--</div></div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid fixed-bottom text-center pb-1 bg-light">
+    <div class="row">
+        <div class="col"><a href="oid.html">SNMP OID documentation</a></div>
+        <div class="col"><a href="config.html">Device configuration</a></div>
+        <div class="col"><a href="ota.html">Update firmware</a></div>
+    </div>
+</div>
+<script>
+
+function setVisible(el, visible){
+    if(visible){
+        el.classList.remove('visually-hidden');
+    }else{
+        el.classList.add('visually-hidden');
+    }
+}
+
+function setValue(data, key, el, unit=""){
+    if((key in data)){
+        setVisible(el.closest('[class*="row"]'), true);
+        if(unit){
+            el.innerHTML = data[key] + " " + unit;
+        }else{
+            el.innerHTML = data[key];
+        }
+    }else{
+        setVisible(el.closest('[class*="row"]'), false);
+    }
+}
+
+function setTimeValue(data, key, el){
+    if((key in data)){
+        setVisible(el.closest('[class*="row"]'), true);
+        el.innerHTML = Math.round(data[key]) + " minutes";
+    }else{
+        setVisible(el.closest('[class*="row"]'), false);
+    }
+}
+
+function setBiColorValue(data, key, el, fn, hide){
+    let autoHide = true;
+    if(typeof hide === 'boolean'){
+        autoHide = hide;
+    }
+    if((key in data)){
+        setVisible(el.closest('[class*="row"]'), true);
+        el.innerHTML = data[key];
+        if(typeof fn === "function"){
+            el.classList.remove('text-bg-success', 'text-bg-danger', 'text-bg-light');
+            let val = fn(data[key]);
+            if(val){
+                el.classList.add('text-bg-success');
+            }else{
+                el.classList.add('text-bg-danger');
+            }
+        }
+    }else{
+        if(autoHide){
+            setVisible(el.closest('[class*="row"]'), false);
+        }
+    }
+}
+
+function fetchInfo(){
+  const req = new XMLHttpRequest();
+    req.open("GET",'/api/status',true);
+    req.onload = function(){
+        const json = JSON.parse(req.responseText);
+        document.getElementById("devName").innerHTML = json.System.Name + " UPS status";
+        document.title = json.System.Name + " UPS status";
+        document.getElementById("globalStatus").classList.remove('text-bg-danger');
+        document.getElementById("globalStatus").classList.add('text-bg-success');
+        document.getElementById("globalStatus").innerHTML = "online";
+        document.getElementById("ipAddress").innerHTML = json.Network.IP;
+        setVisible(document.getElementById("ipAddressRow"), true);
+        document.getElementById("macAddress").innerHTML = json.Network.MAC;
+        setVisible(document.getElementById("macAddressRow"), true);
+
+        //Set UPS status
+        setBiColorValue(json.UPS, "Status", document.getElementById("upsStatus"), (v) => { return v === "online"; }, false);
+        setBiColorValue(json.UPS, "AC present", document.getElementById("upsACPresent"), (v) => { return v; });
+        setTimeValue(json.UPS, "Run time to empty", document.getElementById("upsRemainingTime"));
+        setValue(json.UPS, "Remaining capacity", document.getElementById("upsCapacity"), "%");
+        setVisible(document.getElementById("upsStatusRow"), true)
+    };
+    req.onerror = function(e) {
+        document.getElementById("globalStatus").classList.remove('text-bg-success');
+        document.getElementById("globalStatus").classList.add('text-bg-danger');
+        document.getElementById("globalStatus").innerHTML = "Offline (network error)";
+        setVisible(document.getElementById("upsStatusRow"), false);
+        setVisible(document.getElementById("ipAddressRow"), false);
+        setVisible(document.getElementById("macAddressRow"), false);
+    };
+    req.send();
+};
+
+fetchInfo();
+setInterval(fetchInfo, 2000);
+
+</script>
+
+</body>
+</html>
