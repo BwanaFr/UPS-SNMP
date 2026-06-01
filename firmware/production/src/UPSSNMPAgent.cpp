@@ -115,19 +115,6 @@ shutdown:
     vTaskDelete(NULL);
 }
 
-bool UPSSNMPAgent::insertIntoResponse(const char* oid, SNMP::Message* response)
-{
-    const StatusData* data = StatusProvider::locateSNMPData(oid);
-    if(data){
-        SNMP::BER *ber = data->buildSNMPBER();
-        if(ber){
-            response->add(oid, ber);
-            return true;
-        }
-    }
-    return false;
-}
-
 void UPSSNMPAgent::processSNMPPacket()
 {
     struct sockaddr_storage source_addr; // Large enough for both IPv4 or IPv6
@@ -169,69 +156,15 @@ void UPSSNMPAgent::processSNMPPacket()
     bool send = false;
     switch(message.getType()){
         case SNMP::Type::GetRequest:
-        {
-            // Get the variable binding list from the message.
-            SNMP::VarBindList *varbindlist = message.getVarBindList();
-            for (unsigned int index = 0; index < varbindlist->count(); ++index) {
-                // Each variable binding is a sequence of 2 objects:
-                // - First one is and ObjectIdentifierBER. It holds the OID
-                // - Second is the value of any type
-                SNMP::VarBind *varbind = (*varbindlist)[index];
-                // There is a convenient function to get the OID as a const char*
-                const char *name = varbind->getName();
-                send |= insertIntoResponse(name, &response);
-            }
-        }
+            send |= handleGetRequest(response, message);
             break;
+
         case SNMP::Type::GetNextRequest:
-            SNMP::VarBindList *varbindlist = message.getVarBindList();
-            const uint8_t count = varbindlist->count();
-            for (uint8_t index = 0; index < count; ++index) {
-                // Each variable binding is a sequence of 2 objects:
-                // - First one is and ObjectIdentifierBER. It holds the OID
-                // - Second is the value of any type
-                SNMP::VarBind *varbind = (*varbindlist)[index];
-                // There is a convenient function to get the OID as a const char*
-                const char *name = varbind->getName();
-                bool oidFound = false;
-                const StatusData* data = StatusProvider::locateNextSNMPData(name, oidFound);
-                if(!oidFound){
-                    // OID is unknown
-                    switch (message.getVersion()) {
-                    case SNMP::Version::V1:
-                        // Set error, status and index
-                        response.setError(SNMP::Error::GenErr, index + 1);
-                        // Add OID to response with null value;
-                        response.add(name);
-                    case SNMP::Version::V2C:
-                        // No such object
-                        response.add(name, new SNMP::NoSuchObjectBER());
-                        break;
-                    }
-                }else if(!data){
-                    //No next data
-                    // This is the last OID of the MIB
-                    switch (message.getVersion()) {
-                    case SNMP::Version::V1:
-                        // Set error, status and index
-                        response.setError(SNMP::Error::NoSuchName, index + 1);
-                        // Add OID to response with null value;
-                        response.add(name);
-                        break;
-                    case SNMP::Version::V2C:
-                        // End of MIB view
-                        response.add(name, new SNMP::EndOfMIBViewBER());
-                        break;
-                    }
-                }else{
-                    //Next data found, put it in response
-                    SNMP::BER *ber = data->buildSNMPBER();
-                    if(ber){
-                        response.add(data->getSNMPOID(), ber);
-                    }
-                }
-                send |= true;
-            }
+            send |= handleGetNextRequest(response, message);
+            break;
+
+        case SNMP::Type::GetBulkRequest:
+            send |= handleGetBulkRequest(response, message);
             break;
     }
     if(send){
@@ -248,6 +181,148 @@ void UPSSNMPAgent::processSNMPPacket()
             return;
         }
     }
+}
+
+
+bool UPSSNMPAgent::handleGetRequest(SNMP::Message& response, const SNMP::Message& message)
+{
+    bool send = false;
+    // Get the variable binding list from the message.
+    SNMP::VarBindList *varbindlist = message.getVarBindList();
+    for (unsigned int index = 0; index < varbindlist->count(); ++index) {
+        // Each variable binding is a sequence of 2 objects:
+        // - First one is and ObjectIdentifierBER. It holds the OID
+        // - Second is the value of any type
+        SNMP::VarBind *varbind = (*varbindlist)[index];
+        // There is a convenient function to get the OID as a const char*
+        const char *name = varbind->getName();
+        const StatusData* data = StatusProvider::locateSNMPData(name);
+        if(data){
+            SNMP::BER *ber = data->buildSNMPBER();
+            if(ber){
+                response.add(name, ber);
+            }
+        }else{
+            // OID is unknown
+            switch (message.getVersion()) {
+            case SNMP::Version::V1:
+                // Set error, status and index
+                response.setError(SNMP::Error::NoSuchName, index + 1);
+                // Add OID to response with null value;
+                response.add(name);
+                break;
+            case SNMP::Version::V2C:
+                // No such object
+                response.add(name, new SNMP::NoSuchInstanceBER());
+                break;
+            }
+        }
+        send |= true;
+    }
+    return send;
+}
+
+bool UPSSNMPAgent::handleGetNextRequest(SNMP::Message& response, const SNMP::Message& message)
+{
+    bool send = false;
+    SNMP::VarBindList *varbindlist = message.getVarBindList();
+    const uint8_t count = varbindlist->count();
+    for (uint8_t index = 0; index < count; ++index) {
+        // Each variable binding is a sequence of 2 objects:
+        // - First one is and ObjectIdentifierBER. It holds the OID
+        // - Second is the value of any type
+        SNMP::VarBind *varbind = (*varbindlist)[index];
+        // There is a convenient function to get the OID as a const char*
+        const char *name = varbind->getName();
+        bool oidFound = false;
+        const StatusData* data = StatusProvider::locateNextSNMPData(name, oidFound);
+        if(!oidFound){
+            // OID is unknown
+            switch (message.getVersion()) {
+            case SNMP::Version::V1:
+                // Set error, status and index
+                response.setError(SNMP::Error::GenErr, index + 1);
+                // Add OID to response with null value;
+                response.add(name);
+                break;
+            case SNMP::Version::V2C:
+                // No such object
+                response.add(name, new SNMP::NoSuchObjectBER());
+                break;
+            }
+        }else if(!data){
+            //No next data
+            // This is the last OID of the MIB
+            switch (message.getVersion()) {
+            case SNMP::Version::V1:
+                // Set error, status and index
+                response.setError(SNMP::Error::NoSuchName, index + 1);
+                // Add OID to response with null value;
+                response.add(name);
+                break;
+            case SNMP::Version::V2C:
+                // End of MIB view
+                response.add(name, new SNMP::EndOfMIBViewBER());
+                break;
+            }
+        }else{
+            //Next data found, put it in response
+            SNMP::BER *ber = data->buildSNMPBER();
+            if(ber){
+                response.add(data->getSNMPOID(), ber);
+            }
+        }
+        send |= true;
+    }
+    return send;
+}
+
+bool UPSSNMPAgent::handleGetBulkRequest(SNMP::Message& response, const SNMP::Message& message)
+{
+    bool send = false;
+    //Get bulk is not supported in V1
+    if(message.getVersion() == SNMP::Version::V1){
+        // Set error, status and index
+        response.setError(SNMP::Error::GenErr, 0);
+        return true;
+    }
+
+    SNMP::VarBindList *varbindlist = message.getVarBindList();
+    const uint8_t count = varbindlist->count();
+    uint8_t nonRepeaters = message.getNonRepeaters();
+    const uint8_t maxRepetitions = message.getMaxRepetition();
+    for (uint8_t index = 0; index < count; ++index) {
+        // Each variable binding is a sequence of 2 objects:
+        // - First one is and ObjectIdentifierBER. It holds the OID
+        // - Second is the value of any type
+        SNMP::VarBind *varbind = (*varbindlist)[index];
+        // There is a convenient function to get the OID as a const char*
+        const char *name = varbind->getName();
+        //Do it number of max repetitions
+        for(uint8_t i=0; i<maxRepetitions; ++i){
+            bool oidFound = false;
+            const StatusData* data = StatusProvider::locateNextSNMPData(name, oidFound);
+            if(!data){
+                //No next data
+                // This is the last OID of the MIB
+                // End of MIB view
+                response.add(name, new SNMP::EndOfMIBViewBER());
+            }else{
+                //Next data found, put it in response
+                SNMP::BER *ber = data->buildSNMPBER();
+                if(ber){
+                    response.add(data->getSNMPOID(), ber);
+                }
+                name = data->getSNMPOID(); //We will get next
+            }
+            if(nonRepeaters > 0){
+                --nonRepeaters;
+                break;
+            }
+        }
+        send |= true;
+    }
+    return send;
 }
 
 int UPSSNMPAgent::createControlSocket()

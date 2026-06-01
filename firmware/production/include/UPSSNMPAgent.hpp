@@ -40,14 +40,6 @@ public:
 private:
 
     /**
-     * Insert OID from statusprovider into response
-     * @param oid OID to locate
-     * @param response SNMP message to put BER into
-     * @return true if OID is located
-     */
-    static bool insertIntoResponse(const char* oid, SNMP::Message* response);
-
-    /**
      * SNMP task loop function
      */
     void snmpTask();
@@ -94,6 +86,31 @@ private:
      * Close the socket used for listening
      */
     void closeListenSocket();
+
+    /**
+     * Insert OID from statusprovider into response
+     * @param response SNMP message to put BER into
+     * @param request SNMP request message
+     * @return true if handled properly
+     */
+    bool handleGetRequest(SNMP::Message& response, const SNMP::Message& message);
+
+
+    /**
+     * Handle GetNext request
+     * @param response SNMP response object to put data in
+     * @param request SNMP request message
+     * @return true if handled properly
+     */
+    bool handleGetNextRequest(SNMP::Message& response, const SNMP::Message& message);
+
+    /**
+     * Handle GetBulk request
+     * @param response SNMP response object to put data in
+     * @param request SNMP request message
+     * @return true if handled properly
+     */
+    bool handleGetBulkRequest(SNMP::Message& response, const SNMP::Message& message);
 
     static constexpr uint8_t CTRL_NEW_COMMUNITY = 0x2;  //!< New community string
     static constexpr uint8_t CTRL_SHUTDOWN = 0.3;       //!< Shutdown all
