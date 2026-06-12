@@ -12,7 +12,10 @@ Hardware design files (PCB and 3D enclosure) is stored in the `hardware` folder.
 
 ### Firmware
 The ESP32S3 firmware is built with PlatformIO.
-Releases of the firmware is available on my GitHub page.
+Releases of the firmware are available on my GitHub page.
+
+#### Configuration names
+Some configurations are supported.
 
 ## Usage
 Connect an USB cable in the USB A connector, a PoE enabled RJ45 ethernet connection.

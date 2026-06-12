@@ -115,8 +115,13 @@ void DeviceConfiguration::load()
 
         //Finaly, loads IP configuration
         setIPConfiguration(useDHCP_, ip_, subnet_, gateway_, false);
-        notifyListeners(Parameter::IP_CONFIGURATION);
+        if(xSemaphoreTake(mutexData_, portMAX_DELAY ) == pdTRUE)
+        {
+            ipCfgChanged_ = false;  //Don't send delayed IP event
+            xSemaphoreGive(mutexData_);
+        }
     }
+    notifyListeners(Parameter::IP_CONFIGURATION);
 }
 
 void DeviceConfiguration::fromJSON(const JsonDocument& doc, bool& changed, bool& valid, bool& ipChanged, bool forceNotification)
@@ -196,7 +201,7 @@ void DeviceConfiguration::fromJSON(const JsonDocument& doc, bool& changed, bool&
     IPAddress ip;
     IPAddress subnet;
     IPAddress gateway;
-    bool useDHCP;
+    bool useDHCP = false;
     bool ipCfgSet = false;
     getIPConfiguration(useDHCP, ip, subnet, gateway);
 
