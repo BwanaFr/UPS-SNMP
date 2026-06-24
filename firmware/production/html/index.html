@@ -19,6 +19,10 @@
     <div class="col"><div class="text-end fs-5">MAC address</div></div>
     <div class="col"><div class="badge text-start text-bg-light" id="macAddress">--</div></div>
   </div>
+  <div class="row align-items-center visually-hidden" id="cpuTempRow">
+    <div class="col"><div class="text-end fs-5">CPU temperature</div></div>
+    <div class="col"><div class="badge text-start text-bg-light" id="cpuTemp">--</div></div>
+  </div>
   <div class="row pt-5 visually-hidden" id="upsStatusRow">
     <div class="container">
         <div class="row text-center fs-3">
@@ -184,6 +188,8 @@ function fetchInfo(){
         setVisible(document.getElementById("ipAddressRow"), true);
         document.getElementById("macAddress").innerHTML = json.Network.MAC;
         setVisible(document.getElementById("macAddressRow"), true);
+        document.getElementById("cpuTemp").innerHTML = json.System["CPU Temp"] + "&deg;C";
+        setVisible(document.getElementById("cpuTempRow"), true);
 
         //Set UPS status
         setBiColorValue(json.UPS, "Status", document.getElementById("upsStatus"), (v) => { return v === "online"; }, false);
@@ -202,6 +208,7 @@ function fetchInfo(){
         setVisible(document.getElementById("upsStatusRow"), false);
         setVisible(document.getElementById("ipAddressRow"), false);
         setVisible(document.getElementById("macAddressRow"), false);
+        setVisible(document.getElementById("cpuTempRow"), false);
         setVisible(document.getElementById("switchStatusData"), false);
     };
     req.send();
