@@ -108,9 +108,9 @@ public:
 
     /**
      * Inserts this provider in the specified JSON document
-     * @param doc JSON document to insert this provider data
+     * @param obj JSON object to insert this provider data
      */
-    void insertStatusInJSON(JsonDocument& doc) const;
+    void insertStatusInJSON(JsonObject& obj) const;
 
     /**
      * Gets if the provider is enabled

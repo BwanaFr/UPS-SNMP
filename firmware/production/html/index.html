@@ -42,6 +42,15 @@
         </div>
     </div>
   </div>
+  <div class="row pt-5 visually-hidden" id="switchStatusRow">
+    <div class="container">
+        <div class="row text-center fs-3">
+            <div class="col"><p>Switch status</p></div>
+        </div>
+        <div class="container" id="switchStatusData">
+        </div>
+    </div>
+  </div>
 </div>
 <div class="container-fluid fixed-bottom text-center pb-1 bg-light">
     <div class="row">
@@ -106,6 +115,61 @@ function setBiColorValue(data, key, el, fn, hide){
     }
 }
 
+function createValueDiv(value, name, id){
+    let ret = document.createElement("div");
+    ret.setAttribute("class", "row align-items-center");
+
+    let vColTitle = document.createElement("div");
+    vColTitle.setAttribute("class", "col");
+    ret.append(vColTitle);
+    let vTitle = document.createElement("div");
+    vTitle.setAttribute("class", "text-end fs-5");
+    vTitle.innerHTML = name;
+    vColTitle.append(vTitle);
+
+    let vCol = document.createElement("div");
+    vCol.setAttribute("class", "col");
+    ret.append(vCol);
+    let vValue = document.createElement("div");
+    vValue.setAttribute("class", "badge text-start text-bg-light");
+    vValue.innerHTML = value;
+    vValue.setAttribute("id", id);
+    vCol.append(vValue);
+
+    return ret;
+}
+
+function setSwitchStatus(json){
+    let value = json.Switch;
+    if(value && Object.keys(value).length === 0){
+        setVisible(document.getElementById("switchStatusRow"), false);
+    }else{
+        setVisible(document.getElementById("switchStatusRow"), true);
+        const data = document.getElementById("switchStatusData")
+        data.textContent = '';
+        for(const [key, intfdata] of Object.entries(value)){
+            let newDiv = document.createElement("div");
+            newDiv.classList.add('container');
+            data.append(newDiv);
+
+            let intfNameDiv = document.createElement("div");
+            intfNameDiv.setAttribute("class", "row text-center fs-4 mt-1");
+            newDiv.append(intfNameDiv);
+            let intfNameTitleDiv = document.createElement("div");
+            intfNameTitleDiv.setAttribute("class", "col");
+            intfNameDiv.append(intfNameTitleDiv);
+            let intfP = document.createElement("p");
+            intfP.setAttribute("class", "mb-0");
+            intfP.innerHTML = "Interface " + key;
+            intfNameTitleDiv.append(intfP);
+
+            for(const [vKey, vValue] of Object.entries(intfdata)){
+                newDiv.append(createValueDiv(vValue, vKey, key + "_" + vKey));
+            }
+        }
+    }
+}
+
 function fetchInfo(){
   const req = new XMLHttpRequest();
     req.open("GET",'/api/status',true);
@@ -127,6 +191,9 @@ function fetchInfo(){
         setTimeValue(json.UPS, "Run time to empty", document.getElementById("upsRemainingTime"));
         setValue(json.UPS, "Remaining capacity", document.getElementById("upsCapacity"), "%");
         setVisible(document.getElementById("upsStatusRow"), true)
+
+        //Sets switch status
+        setSwitchStatus(json);
     };
     req.onerror = function(e) {
         document.getElementById("globalStatus").classList.remove('text-bg-success');
@@ -135,12 +202,13 @@ function fetchInfo(){
         setVisible(document.getElementById("upsStatusRow"), false);
         setVisible(document.getElementById("ipAddressRow"), false);
         setVisible(document.getElementById("macAddressRow"), false);
+        setVisible(document.getElementById("switchStatusData"), false);
     };
     req.send();
 };
 
 fetchInfo();
-setInterval(fetchInfo, 2000);
+// setInterval(fetchInfo, 2000);
 
 </script>
 

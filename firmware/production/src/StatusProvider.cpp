@@ -78,10 +78,10 @@ void StatusProvider::addData(StatusData* data)
     }
 }
 
-void StatusProvider::insertStatusInJSON(JsonDocument& doc) const
+void StatusProvider::insertStatusInJSON(JsonObject& obj) const
 {
     if(enabled_){
-        JsonObject d = doc[name_].to<JsonObject>();
+        JsonObject d = obj[name_].to<JsonObject>();
         StatusData* data = firstData_;
         while(data){
             if(data->isEnabled()){

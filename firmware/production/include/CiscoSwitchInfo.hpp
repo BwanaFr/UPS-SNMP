@@ -174,6 +174,8 @@ public:
 
     inline bool isOnScreen() { return statusProvider ?  statusProvider->isOnScreen() : false; };
 
+    void insertInJSON(JsonObject& doc) const;
+
 private:
     int interfaceIndex;             //!< Index of the interface (10128, for example)
     int physicalIndex;              //!< Physical index (alias) of this interface
@@ -233,6 +235,11 @@ public:
      * @param timeoutMs Response timeout in milliseconds
      */
     inline void setSNMPResponseTimeout(unsigned long timeoutMs) { timeout_ = timeoutMs; };
+
+    /**
+     * Insert some status in the specified JSON document
+     */
+    void insertStatusInJSON(JsonObject& doc) const;
 
 private:
     /**
@@ -303,6 +310,7 @@ private:
     int32_t snmpFailures_;                                          //!< SNMP timeout count
     bool dirty_;                                                    //!< The interface map is dirty
     uint8_t buffer_[1400];                                          //!< Buffer for data
+    SemaphoreHandle_t mutexData_;                                   //!< Protect access to ressources
     /**
      * Gets all trunk enabled interfaces on the device
      * It will fill the trunkInterfaces_ map (with interface index as key)

@@ -17,6 +17,7 @@
 #include <ETH.h>
 #include <GlobalStatus.hpp>
 #include <NetworkStatus.hpp>
+#include <CiscoSwitchInfo.hpp>
 #include "StaticWebContent.h"
 
 #define MAX_OTA_FILENAME 64
@@ -401,24 +402,27 @@ esp_err_t Webserver::status_get_handler( httpd_req_t *req )
     httpd_resp_set_type(req, "application/json");
     //Build a JSON with UPS status
     JsonDocument doc;
+    JsonObject obj = doc.to<JsonObject>();
     //TODO: Add all providers
     //Sets UPS status to JSON file
-    upsDevice.insertStatusInJSON(doc);
+    upsDevice.insertStatusInJSON(obj);
 
 #ifdef HAS_TEMP_PROBE
-    tempProbe.insertStatusInJSON(doc);
+    tempProbe.insertStatusInJSON(obj);
 #endif
     //Network status
-    networkStatus.insertStatusInJSON(doc);
+    networkStatus.insertStatusInJSON(obj);
     //Global status (uptime, CPU temp)
-    globalStatus.insertStatusInJSON(doc);
+    globalStatus.insertStatusInJSON(obj);
     //Ping results (if configured)
-    pinger.insertStatusInJSON(doc);
+    pinger.insertStatusInJSON(obj);
+    //Cisco fetcher
+    ciscoFetcher.insertStatusInJSON(obj);
 
     //Serialize to string
     std::string upsStatusJSON;
     serializeJson(doc, upsStatusJSON);
-    httpd_resp_send( req, upsStatusJSON.c_str(), upsStatusJSON.length());
+    httpd_resp_send(req, upsStatusJSON.c_str(), upsStatusJSON.length());
     return ESP_OK;
 }
 

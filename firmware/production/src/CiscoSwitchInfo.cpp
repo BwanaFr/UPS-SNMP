@@ -158,13 +158,31 @@ void CiscoSwitchInterface::destroyStatusProvider()
     }
 }
 
+void CiscoSwitchInterface::insertInJSON(JsonObject& doc) const
+{
+    if(statusProvider){
+        statusProvider->insertStatusInJSON(doc);
+    }
+}
+
 CiscoSwitchInfoFetcher::CiscoSwitchInfoFetcher() :
     started_{false}, timeout_{10000}, switchAddr_{0,0,0,0}, taskHandle_{nullptr},
-    snmpFailures_{0}, dirty_{true}, buffer_{0}
-{}
+    snmpFailures_{0}, dirty_{true}, buffer_{0}, mutexData_{nullptr}
+{
+    mutexData_ =  xSemaphoreCreateMutex();
+    if(mutexData_ == NULL){
+        ESP_LOGE(TAG, "Unable to create data mutex");
+    }
+}
 
 CiscoSwitchInfoFetcher::~CiscoSwitchInfoFetcher()
 {
+
+        if(mutexData_){
+            vSemaphoreDelete(mutexData_);
+            mutexData_ = nullptr;
+        }
+
 }
 
 void CiscoSwitchInfoFetcher::start()
@@ -181,9 +199,13 @@ void CiscoSwitchInfoFetcher::start()
 
 void CiscoSwitchInfoFetcher::stop()
 {
-    if(started_){
-        started_ = false;
-        vTaskSuspend(taskHandle_);
+    if(xSemaphoreTake(mutexData_, portMAX_DELAY ) == pdTRUE)
+    {
+        if(started_){
+            started_ = false;
+            vTaskSuspend(taskHandle_);
+        }
+        xSemaphoreGive(mutexData_);
     }
 }
 
@@ -282,7 +304,6 @@ void CiscoSwitchInfoFetcher::loop()
     static unsigned long lastFastQuery = 0;
     static unsigned long lastInterfaceRefresh = millis();
 
-
     //Gets if one of our interface is on screen
     CiscoSwitchInterface* onScreenIntf = getInterfaceOnScreen();
     if(onScreenIntf && !dirty_ && ((millis() - lastFastQuery) >= 2000)){
@@ -309,8 +330,12 @@ void CiscoSwitchInfoFetcher::loop()
             }
             ESP_LOGI(TAG, "Fetching ports information from %s", switchAddr_.toString().c_str());
             //Get infos
-            snmpFailures_ = 0;
-            interfaces_.clear();
+            if(xSemaphoreTake(mutexData_, portMAX_DELAY ) == pdTRUE)
+            {
+                snmpFailures_ = 0;
+                interfaces_.clear();
+                xSemaphoreGive(mutexData_);
+            }
 
             //Gets all interfaces configured as trunk
             getTrunkInterfaces();
@@ -380,7 +405,11 @@ void CiscoSwitchInfoFetcher::getTrunkInterfaces()
                 getOIDIndex(oid, vlanTrunkPortIfIndexStr);
                 int portIfIndex = std::atoi(vlanTrunkPortIfIndexStr.c_str());
                 //Add it to map
-                interfaces_.emplace(portIfIndex, CiscoSwitchInterface(portIfIndex, true));
+                if(xSemaphoreTake(mutexData_, portMAX_DELAY ) == pdTRUE)
+                {
+                    interfaces_.emplace(portIfIndex, CiscoSwitchInterface(portIfIndex, true));
+                    xSemaphoreGive(mutexData_);
+                }
             }
         }
     });
@@ -424,15 +453,23 @@ void CiscoSwitchInfoFetcher::getRXMeasurableInterfaces()
         getPhysicalAlias(parentIndex, &portIndex);
         InterfacesMap::iterator it = interfaces_.find(portIndex);
         if(it != interfaces_.end()){
-            it->second.getRXPowerSensor()->setPhysicalIndex(index);
-            getSensorConstants(it->second.getRXPowerSensor());
+            if(xSemaphoreTake(mutexData_, portMAX_DELAY ) == pdTRUE)
+            {
+                it->second.getRXPowerSensor()->setPhysicalIndex(index);
+                getSensorConstants(it->second.getRXPowerSensor());
+                xSemaphoreGive(mutexData_);
+            }
         }else{
-            std::pair<InterfacesMap::iterator, bool> ret = interfaces_.emplace(portIndex, CiscoSwitchInterface{portIndex, false});
-            if(ret.second){
-                //Sets the physical index
-                ret.first->second.setPhysicalIndex(parentIndex);
-                ret.first->second.getRXPowerSensor()->setPhysicalIndex(index);
-                getSensorConstants(ret.first->second.getRXPowerSensor());
+            if(xSemaphoreTake(mutexData_, portMAX_DELAY ) == pdTRUE)
+            {
+                std::pair<InterfacesMap::iterator, bool> ret = interfaces_.emplace(portIndex, CiscoSwitchInterface{portIndex, false});
+                if(ret.second){
+                    //Sets the physical index
+                    ret.first->second.setPhysicalIndex(parentIndex);
+                    ret.first->second.getRXPowerSensor()->setPhysicalIndex(index);
+                    getSensorConstants(ret.first->second.getRXPowerSensor());
+                }
+                xSemaphoreGive(mutexData_);
             }
         }
     }
@@ -441,10 +478,14 @@ void CiscoSwitchInfoFetcher::getRXMeasurableInterfaces()
 void CiscoSwitchInfoFetcher::getInterfacesNames()
 {
     for(InterfacesMap::iterator it = interfaces_.begin(); it != interfaces_.end(); ++it){
-        sendGetRequest(entPhysicalName, it->second.getPhysicalIndex(), [it](const SNMP::BER* ber){
+        sendGetRequest(entPhysicalName, it->second.getPhysicalIndex(), [this, it](const SNMP::BER* ber){
             if(ber->getType() == SNMP::Type::OctetString){
                 const SNMP::OctetStringBER* strBER = static_cast<const SNMP::OctetStringBER*>(ber);
-                it->second.setName(strBER->getValue());
+                if(xSemaphoreTake(mutexData_, portMAX_DELAY ) == pdTRUE)
+                {
+                    it->second.setName(strBER->getValue());
+                    xSemaphoreGive(mutexData_);
+                }
             }
         });
         getInterfaceAlias(&it->second);
@@ -461,9 +502,13 @@ void CiscoSwitchInfoFetcher::getTrunkPhysicalAliases()
             if(strlen(strBER->getValue()) > 0){
                 //Add to map only if the alias contains something
                 int intfIndex = std::atoi(strBER->getValue());
-                InterfacesMap::iterator intf = interfaces_.find(intfIndex);
-                if(intf != interfaces_.end()){
-                    intf->second.setPhysicalIndex(std::atoi(entPhysIndex.c_str()));
+                if(xSemaphoreTake(mutexData_, portMAX_DELAY ) == pdTRUE)
+                {
+                    InterfacesMap::iterator intf = interfaces_.find(intfIndex);
+                    if(intf != interfaces_.end()){
+                        intf->second.setPhysicalIndex(std::atoi(entPhysIndex.c_str()));
+                    }
+                    xSemaphoreGive(mutexData_);
                 }
             }
         }
@@ -480,20 +525,28 @@ void CiscoSwitchInfoFetcher::getOIDIndex(const std::string& oid, std::string& in
 
 void CiscoSwitchInfoFetcher::getInterfaceCDP(CiscoSwitchInterface* interface)
 {
-    sendGetSubtree(cdpCacheDeviceId, interface->getInterfaceIndex(), [interface](const std::string& oid, const SNMP::BER* ber){
+    sendGetSubtree(cdpCacheDeviceId, interface->getInterfaceIndex(), [this, interface](const std::string& oid, const SNMP::BER* ber){
         if(ber->getType() == SNMP::Type::OctetString){
             const SNMP::OctetStringBER* strBER = static_cast<const SNMP::OctetStringBER*>(ber);
-            interface->setCDPNeighbour(strBER->getValue());
+            if(xSemaphoreTake(mutexData_, portMAX_DELAY ) == pdTRUE)
+            {
+                interface->setCDPNeighbour(strBER->getValue());
+                xSemaphoreGive(mutexData_);
+            }
         }
     });
 }
 
 void CiscoSwitchInfoFetcher::getInterfaceAlias(CiscoSwitchInterface* interface)
 {
-    sendGetRequest(ifAlias, interface->getInterfaceIndex(), [interface](const SNMP::BER* ber){
+    sendGetRequest(ifAlias, interface->getInterfaceIndex(), [this, interface](const SNMP::BER* ber){
         if(ber->getType() == SNMP::Type::OctetString){
             const SNMP::OctetStringBER* valBER = static_cast<const SNMP::OctetStringBER*>(ber);
-            interface->setAlias(valBER->getValue());
+            if(xSemaphoreTake(mutexData_, portMAX_DELAY ) == pdTRUE)
+            {
+                interface->setAlias(valBER->getValue());
+                xSemaphoreGive(mutexData_);
+            }
             ESP_LOGI(TAG, "Interface alias -> %s", valBER->getValue());
         }
     });
@@ -664,6 +717,19 @@ CiscoSwitchInterface* CiscoSwitchInfoFetcher::getInterfaceOnScreen()
         }
     }
     return nullptr;
+}
+
+void CiscoSwitchInfoFetcher::insertStatusInJSON(JsonObject& doc) const
+{
+    JsonObject ciscoObj = doc["Switch"].to<JsonObject>();
+    if(xSemaphoreTake(mutexData_, portMAX_DELAY ) == pdTRUE)
+    {
+        for(InterfacesMap::const_iterator it = interfaces_.begin(); it != interfaces_.end(); ++it)
+        {
+            it->second.insertInJSON(ciscoObj);
+        }
+        xSemaphoreGive(mutexData_);
+    }
 }
 
 CiscoSwitchInfoFetcher ciscoFetcher;
