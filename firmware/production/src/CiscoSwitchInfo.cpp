@@ -280,6 +280,8 @@ void CiscoSwitchInfoFetcher::loop()
 {
     static unsigned long lastQuery = millis();
     static unsigned long lastFastQuery = 0;
+    static unsigned long lastInterfaceRefresh = millis();
+
 
     //Gets if one of our interface is on screen
     CiscoSwitchInterface* onScreenIntf = getInterfaceOnScreen();
@@ -288,7 +290,12 @@ void CiscoSwitchInfoFetcher::loop()
         refreshInterfaceInfo(onScreenIntf);
         lastFastQuery = millis();
     }
-    if(dirty_ || ((millis() - lastQuery) > 10000)){ //TODO: Increase update frequency when on screen
+    if(dirty_ || ((millis() - lastQuery) > 10000)){
+        if(interfaces_.empty() && (millis() - lastInterfaceRefresh) > 30000){
+            //No interfaces, try to refresh them
+            dirty_ = true;
+            lastInterfaceRefresh = millis();
+        }
         if(dirty_){
             if(onScreenIntf){
                 //Interface is shown on screen, don't destroy it now
