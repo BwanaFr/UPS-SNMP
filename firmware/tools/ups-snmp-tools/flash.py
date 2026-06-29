@@ -1,10 +1,7 @@
-import os
 import pyexcel
 import argparse
 import re
-import pprint
 import requests
-import struct
 
 espList = []
 
@@ -45,7 +42,7 @@ def updateESP(file, ip):
         print(f'Unable to update ESP {ip}.')
 
 def main():
-    parser = argparse.ArgumentParser(description='Batch flash.')
+    parser = argparse.ArgumentParser(prog="ups-snmp tool", description='Batch flash.')
     parser.add_argument('--timeout', type=int, default=5, help='HTTP timeout in seconds.')
     parser.add_argument('--ipColumn', type=int, default=2, help='IP column index.')
     parser.add_argument('--nameColumn', type=int, default=1, help='Name column index.')
@@ -62,8 +59,11 @@ def main():
         espIP = esp["ip"]
         remVersion = checkESP(espIP)
         if fwVersion != remVersion:
+            print(f'Updating {espIP} from {remVersion} to {fwVersion}')
             updateESP(args.update, espIP)
         else:
             print(f'ESP {espIP} already running version : {remVersion}')
+
+
 if __name__ == '__main__':
     main()

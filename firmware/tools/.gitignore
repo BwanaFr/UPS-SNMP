@@ -1,0 +1,13 @@
+/.tox
+/.vscode
+/public
+/.eggs
+/*.egg-info
+/build/
+/venv/
+/.vscode
+.py[oc]
+__pycache__
+output.xml
+log.html
+report.html

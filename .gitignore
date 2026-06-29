@@ -9,3 +9,4 @@ firmware/**/*include/Customization.hpp
 firmware/**/src/GitVersion.cpp
 *.ps1
 firmware/**/src/StaticWebContent.cpp
+*.fw
