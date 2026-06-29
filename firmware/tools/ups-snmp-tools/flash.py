@@ -2,6 +2,7 @@ import pyexcel
 import argparse
 import re
 import requests
+import json
 
 espList = []
 
@@ -19,7 +20,13 @@ def checkESP(ip):
     response = response.json()
     return response["System"]["Version"]
 
-def openFile(file, ipCol, nameCol, sheetName):
+def getName(esp):
+    if esp["name"] is not None:
+        return f'{esp["name"]} ({esp["ip"]})'
+    else:
+        return esp["ip"]
+
+def openFile(file, ipCol, nameCol, nameSub, sheetName):
     book = pyexcel.get_book(file_name=file)
     spreadsheet = book[sheetName]
     pattern = re.compile(r"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)")
@@ -27,43 +34,65 @@ def openFile(file, ipCol, nameCol, sheetName):
         ip = spreadsheet.cell_value(r, ipCol-1)
         if not pattern.match(ip):
             continue
-        name = spreadsheet.cell_value(r, nameCol-1)
+        if nameCol is not None:
+            name = spreadsheet.cell_value(r, nameCol-1)
+            if nameSub is not None:
+                subs = nameSub.split('/', 1)
+                if(len(subs) == 2):
+                    name = name.replace(subs[0], subs[1])
+                else:
+                    print(f'Bad substitution {nameSub}.')
+        else:
+            name = None
         device = {"ip" : ip, "name" : name}
         espList.append(device)
     return len(espList)
 
-def updateESP(file, ip):
-    url = f'http://{ip}/api/ota'
+def fixName(esp):
+    if esp["name"] is not None:
+        url = f'http://{esp["ip"]}/api/config'
+        data = {"deviceName": esp["name"]}
+        print(f'Updating device {esp["ip"]} name to {esp["name"]}')
+        r = requests.post(url, data=json.dumps(data))
+        if r.status_code != 200:
+            print(f'Unable to update device name on {esp["ip"]}')
+
+def updateESP(file, esp):
+    url = f'http://{esp.ip}/api/ota'
     with open(file, 'rb') as f:
         r = requests.post(url, data=f)
     if r.status_code >= 200 and r.status_code < 400:
-        print(f'ESP {ip} updated!')
+        print(f'ESP {getName(esp)} updated!')
     else:
-        print(f'Unable to update ESP {ip}.')
+        print(f'Unable to update ESP {getName(esp)}.')
 
 def main():
     parser = argparse.ArgumentParser(prog="ups-snmp tool", description='Batch flash.')
     parser.add_argument('--timeout', type=int, default=5, help='HTTP timeout in seconds.')
     parser.add_argument('--ipColumn', type=int, default=2, help='IP column index.')
-    parser.add_argument('--nameColumn', type=int, default=1, help='Name column index.')
+    parser.add_argument('--nameColumn', type=int, default=None, help='Name column index.')
+    parser.add_argument('--nameSubstitution', type=str, default=None, help="Name substitution.")
     parser.add_argument('--sheetName', type=str, default="VLAN2", help='Sheet name.')
+    parser.add_argument('--fixName', action='store_true', help='Fix device name.')
     parser.add_argument('list', type=str, help='Path to ESP Excel file.')
     parser.add_argument('update', type=str, help='Path to ESP firmware file.')
     args = parser.parse_args()
 
     fwVersion = getFWVersion(args.update)
 
-    openFile(args.list, args.ipColumn, args.nameColumn, args.sheetName)
+    openFile(args.list, args.ipColumn, args.nameColumn, args.nameSubstitution, args.sheetName)
     print(f'Found {len(espList)} devices.')
     for esp in espList:
         espIP = esp["ip"]
         remVersion = checkESP(espIP)
         if fwVersion != remVersion:
-            print(f'Updating {espIP} from {remVersion} to {fwVersion}')
-            updateESP(args.update, espIP)
+            print(f'Updating {getName(esp)} from {remVersion} to {fwVersion}')
+            updateESP(args.update, esp)
         else:
-            print(f'ESP {espIP} already running version : {remVersion}')
+            print(f'ESP {getName(esp)} already running version : {remVersion}')
 
+        if args.fixName:
+            fixName(esp)
 
 if __name__ == '__main__':
     main()
