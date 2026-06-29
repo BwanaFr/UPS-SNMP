@@ -174,48 +174,58 @@ function setSwitchStatus(json){
     }
 }
 
+function networkError(e){
+    document.getElementById("globalStatus").classList.remove('text-bg-success');
+    document.getElementById("globalStatus").classList.add('text-bg-danger');
+    document.getElementById("globalStatus").innerHTML = "Offline (network error)";
+    setVisible(document.getElementById("upsStatusRow"), false);
+    setVisible(document.getElementById("ipAddressRow"), false);
+    setVisible(document.getElementById("macAddressRow"), false);
+    setVisible(document.getElementById("cpuTempRow"), false);
+    setVisible(document.getElementById("switchStatusData"), false);
+    setTimeout(fetchInfo, 5000);
+}
+
 function fetchInfo(){
-  const req = new XMLHttpRequest();
+    const req = new XMLHttpRequest();
+    req.timeout = 2000; // time in milliseconds
     req.open("GET",'/api/status',true);
     req.onload = function(){
-        const json = JSON.parse(req.responseText);
-        document.getElementById("devName").innerHTML = json.System.Name + " UPS status";
-        document.title = json.System.Name + " UPS status";
-        document.getElementById("globalStatus").classList.remove('text-bg-danger');
-        document.getElementById("globalStatus").classList.add('text-bg-success');
-        document.getElementById("globalStatus").innerHTML = "online";
-        document.getElementById("ipAddress").innerHTML = json.Network.IP;
-        setVisible(document.getElementById("ipAddressRow"), true);
-        document.getElementById("macAddress").innerHTML = json.Network.MAC;
-        setVisible(document.getElementById("macAddressRow"), true);
-        document.getElementById("cpuTemp").innerHTML = json.System["CPU Temp"] + "&deg;C";
-        setVisible(document.getElementById("cpuTempRow"), true);
+        if (req.readyState === 4) {
+            const json = JSON.parse(req.responseText);
+            document.getElementById("devName").innerHTML = json.System.Name + " UPS status";
+            document.title = json.System.Name + " UPS status";
+            document.getElementById("globalStatus").classList.remove('text-bg-danger');
+            document.getElementById("globalStatus").classList.add('text-bg-success');
+            document.getElementById("globalStatus").innerHTML = "online";
+            document.getElementById("ipAddress").innerHTML = json.Network.IP;
+            setVisible(document.getElementById("ipAddressRow"), true);
+            document.getElementById("macAddress").innerHTML = json.Network.MAC;
+            setVisible(document.getElementById("macAddressRow"), true);
+            document.getElementById("cpuTemp").innerHTML = json.System["CPU Temp"] + "&deg;C";
+            setVisible(document.getElementById("cpuTempRow"), true);
 
-        //Set UPS status
-        setBiColorValue(json.UPS, "Status", document.getElementById("upsStatus"), (v) => { return v === "online"; }, false);
-        setBiColorValue(json.UPS, "AC present", document.getElementById("upsACPresent"), (v) => { return v; });
-        setTimeValue(json.UPS, "Run time to empty", document.getElementById("upsRemainingTime"));
-        setValue(json.UPS, "Remaining capacity", document.getElementById("upsCapacity"), "%");
-        setVisible(document.getElementById("upsStatusRow"), true)
+            //Set UPS status
+            setBiColorValue(json.UPS, "Status", document.getElementById("upsStatus"), (v) => { return v === "online"; }, false);
+            setBiColorValue(json.UPS, "AC present", document.getElementById("upsACPresent"), (v) => { return v; });
+            setTimeValue(json.UPS, "Run time to empty", document.getElementById("upsRemainingTime"));
+            setValue(json.UPS, "Remaining capacity", document.getElementById("upsCapacity"), "%");
+            setVisible(document.getElementById("upsStatusRow"), true)
 
-        //Sets switch status
-        setSwitchStatus(json);
+            //Sets switch status
+            setSwitchStatus(json);
+
+            //Reload
+            setTimeout(fetchInfo, 2000);
+        }
     };
-    req.onerror = function(e) {
-        document.getElementById("globalStatus").classList.remove('text-bg-success');
-        document.getElementById("globalStatus").classList.add('text-bg-danger');
-        document.getElementById("globalStatus").innerHTML = "Offline (network error)";
-        setVisible(document.getElementById("upsStatusRow"), false);
-        setVisible(document.getElementById("ipAddressRow"), false);
-        setVisible(document.getElementById("macAddressRow"), false);
-        setVisible(document.getElementById("cpuTempRow"), false);
-        setVisible(document.getElementById("switchStatusData"), false);
-    };
+    req.onerror = networkError;
+    req.onabort = networkError;
+    req.ontimeout = networkError;
     req.send();
 };
 
 fetchInfo();
-// setInterval(fetchInfo, 2000);
 
 </script>
 

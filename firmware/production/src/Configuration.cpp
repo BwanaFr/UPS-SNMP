@@ -121,7 +121,6 @@ void DeviceConfiguration::load()
             xSemaphoreGive(mutexData_);
         }
     }
-    notifyListeners(Parameter::IP_CONFIGURATION);
 }
 
 void DeviceConfiguration::fromJSON(const JsonDocument& doc, bool& changed, bool& valid, bool& ipChanged, bool forceNotification)
