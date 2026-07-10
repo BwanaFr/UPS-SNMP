@@ -54,5 +54,5 @@ Other parameters:
 
 Example:
 ```bash
-python -m ups-snmp-tools devices.xlsx waveshare_esp32_eth_ch1115_v0.0.5.fw --nameColumn 1 --nameSubstitution "sw-/ups-"
+python -m ups-snmp-tools devices.xlsx --update waveshare_esp32_eth_ch1115_v0.0.5.fw --nameColumn 1 --nameSubstitution "sw-/ups-" --ipSubstitution "10.10.10/10.10.11" --nameFilter "(?!.*core.*)(sw-.*)"
 ```
