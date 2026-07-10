@@ -171,7 +171,7 @@ void setup()
     }
 
     //Loads configuration from flash (Default used if flash empty)
-    //Loading the configuration will send a IP configuration change event
+    //Loading the configuration will NOT send a IP configuration change event
     configuration.load();
 
     //Starts SNMP agent
@@ -186,6 +186,8 @@ void setup()
     //Global device status reading
     globalStatus.begin();
 
+    //Reconfigure IP after starting all services
+    configChanged(DeviceConfiguration::Parameter::IP_CONFIGURATION);
 }
 
 void loop()
