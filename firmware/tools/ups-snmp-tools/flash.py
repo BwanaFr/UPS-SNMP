@@ -3,8 +3,10 @@ import argparse
 import re
 import requests
 import json
+import sys
 
 espList = []
+timeout = 5
 
 def getFWVersion(fwFile):
     pattern = re.search(r".*_(.*).fw", fwFile)
@@ -16,7 +18,7 @@ def getFWVersion(fwFile):
     return None
 
 def checkESP(ip):
-    response = requests.get(f'http://{ip}/api/status')
+    response = requests.get(f'http://{ip}/api/status', timeout=timeout)
     response = response.json()
     return response["System"]["Version"]
 
@@ -65,7 +67,7 @@ def fixName(esp):
         data = {"deviceName": esp["name"]}
         print(f'Updating device {esp["ip"]} name to {esp["name"]}')
         try:
-            r = requests.post(url, data=json.dumps(data))
+            r = requests.post(url, data=json.dumps(data), timeout=timeout)
             if r.status_code != 200:
                 print(f'Unable to update device name on {esp["ip"]}')
         except:
@@ -94,6 +96,9 @@ def main():
     parser.add_argument('list', type=str, help='Path to ESP Excel file.')
     args = parser.parse_args()
 
+    global timeout
+    timeout = args.timeout
+
     if args.update is not None:
         fwVersion = getFWVersion(args.update)
 
@@ -110,7 +115,6 @@ def main():
                 print(f'ESP {getName(esp)} already running version : {remVersion}')
 
         if args.fixName:
-            print(f'Checking {espIP}')
             fixName(esp)
 
 if __name__ == '__main__':
